@@ -17,22 +17,30 @@
       <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
     </ul>
-    <Page></Page>
+    <Page :pages="pages" :pageNumber="pageNumber" :pageSize="pageSize" v-on:pagingEvent="find"></Page>
 
   </div>
 </template>
 
 <script>
-  import Page from './page.vue';
+  import Page from './page.vue'
   export default {
     name: 'HelloWorld',
     data () {
       return {
-        msg: 'Welcome to Your Vue.js App'
+        msg: 'Welcome to Your Vue.js App',
+        pageNumber: 1,
+        pageSize: 10,
+        pages: 9
       }
     },
     components: {
       Page
+    },
+    methods: {
+      find: function (e) {
+        this.pageNumber = e
+      }
     }
   }
 </script>
