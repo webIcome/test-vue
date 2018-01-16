@@ -39,7 +39,15 @@
     },
     methods: {
       find: function (e) {
-        this.pageNumber = e
+//        this.pageNumber = e
+        this.getData(e)
+      },
+      getData: function (pageNumber) {
+        console.log('11111111a' + this.pageNumber)
+        this.pageNumber = pageNumber
+        setTimeout(() => {
+          console.log('22222a' + this.pageNumber)
+        }, 1000)
       }
     }
   }

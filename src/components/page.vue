@@ -21,7 +21,8 @@
     name: 'Page',
     data () {
       return {
-        givenPage: null
+        givenPage: null,
+        isRepet: false
       }
     },
     props: {
@@ -29,6 +30,11 @@
       pageSize: Number,
       total: Number,
       pages: Number
+    },
+    watch: {
+      pageNumber: function (newP, oldP) {
+        this.isRepet = false
+      }
     },
     computed: {
       numbers: function () {
@@ -63,7 +69,11 @@
     methods: {
       goToPage: function (number) {
         if (!Number(number)) return
-        this.search(number)
+        if (number === this.pageNumber) {
+          this.search(number, true)
+        } else {
+          this.search(number)
+        }
       },
       goToGivenPage: function () {
         if (this.givenPage <= 0 || this.givenPage > this.pages) return
@@ -77,10 +87,14 @@
         if (this.lastPage) return
         this.search(this.pageNumber + 1)
       },
-      search: function (pageNumber) {
-        this.$emit('pagingEvent', pageNumber)
+      search: function (pageNumber, reflesh) {
+        if (reflesh) {
+          this.$emit('pagingEvent', pageNumber)
+        } else if (!this.isRepet) {
+          this.isRepet = true
+          this.$emit('pagingEvent', pageNumber)
+        }
       }
-
     }
   }
 </script>
